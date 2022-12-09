@@ -8,5 +8,4 @@ public interface Block {
 
     String getMaterial();
 
-    Stream<Block> toStream();
 }

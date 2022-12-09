@@ -1,5 +1,6 @@
 package service.impl;
 
+import exceptions.NotFoundException;
 import org.junit.jupiter.api.Test;
 import service.Block;
 
@@ -22,7 +23,7 @@ class WallTest {
     private Wall wall = new Wall();
 
     @Test
-    void shouldReturnCorrectBlockByColor() {
+    void shouldReturnCorrectBlockByColor() throws NotFoundException {
         //given
         wall.addBlock(someBlock1);
         wall.addBlock(someBlock2);
