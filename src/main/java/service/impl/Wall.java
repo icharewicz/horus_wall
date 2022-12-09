@@ -1,5 +1,6 @@
 package service.impl;
 
+import exceptions.NotFoundException;
 import service.Block;
 import service.CompositeBlock;
 import service.Structure;
@@ -14,17 +15,7 @@ public class Wall implements Structure {
 
     private List<Block> blocks = new ArrayList<>();
 
-//    public List<Block> getBlocks() {
-//        return blocks;
-//    }
-
-//    public void showBlocks() {
-//        for (Wall w : blocks) {
-//            System.out.println(b);
-//        }
-//    }
-
-    public void addBlock(Block block){
+    public void addBlock(Block block) {
         blocks.add(block);
     }
 
@@ -32,23 +23,23 @@ public class Wall implements Structure {
     @Override
     public Optional<Block> findBlockByColor(String color) {
         Optional<Block> blockOptional = blocks.stream()
-//                .filter(b -> b instanceof SomeCompositeBlock)
-//                .flatMap(b -> ((SomeCompositeBlock)b).getBlocks().stream())
-                .flatMap(b -> b.toStream())
                 .filter(c -> color.equals(c.getColor()))
                 .findFirst();
-        if (blockOptional.isPresent()){
+        if (blockOptional.isPresent()) {
             return blockOptional;
+        } else {
+            try {
+                throw new NotFoundException("Color not found!");
+            } catch (NotFoundException e) {
+                throw new RuntimeException(e);
+            }
         }
-        return blocks.stream()
-                .filter(c -> color.equals(c.getColor())).findFirst();
     }
 
     //zwraca wszystkie elementy z danego materiału
     @Override
     public List<Block> findBlocksByMaterial(String material) {
         return blocks.stream()
-                .flatMap(b -> b.toStream())
                 .filter(block -> material.equals(block.getMaterial()))
                 .collect(Collectors.toList());
     }
@@ -56,7 +47,7 @@ public class Wall implements Structure {
     //zwraca liczbę wszystkich elementów tworzących strukturę
     @Override
     public int count() {
-        return (int) blocks.stream().flatMap(b -> b.toStream()).count();
+        return (int) blocks.stream().count();
     }
 
     @Override

@@ -15,10 +15,6 @@ public class SomeBlock implements Block {
         this.material = material;
     }
 
-    @Override
-    public Stream<Block> toStream() {
-        return Stream.of(this);
-    }
 
     @Override
     public String getColor() {

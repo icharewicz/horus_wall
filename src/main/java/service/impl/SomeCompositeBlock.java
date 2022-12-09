@@ -16,16 +16,6 @@ public class SomeCompositeBlock extends SomeBlock implements CompositeBlock {
     public SomeCompositeBlock(String color, String material) {
         super(color, material);
     }
-//    public SomeCompositeBlock(List<Block> blockList) {
-//        super(color, material);
-//        this.blockList = blockList;
-//    }
-
-    @Override
-    public Stream<Block> toStream() {
-        return Stream.concat(super.toStream(),
-                blockList.stream().flatMap(block -> block.toStream()));
-    }
 
     public void addCompositeBlock(Block block){
         blockList.add(block);
@@ -33,7 +23,6 @@ public class SomeCompositeBlock extends SomeBlock implements CompositeBlock {
 
     @Override
     public List<Block> getBlocks() {
-        //return new ArrayList<>(blockList);
         return Collections.unmodifiableList(blockList);
     }
 
